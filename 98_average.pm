@@ -54,7 +54,7 @@ avg_setValTime($$$$)
 {
   my ($r, $rname, $val, $tn) = @_;
   $r->{$rname}{VAL} = $val;
-  $r->{$rname}{TIME} = $tn; 
+  $r->{$rname}{TIME} = $tn;
 }
 ##########################
 sub
@@ -81,7 +81,7 @@ average_Notify($$)
   my $ffmt      =  AttrVal($myName, "floatformat", "%0.1f");
   my $custInt   =  AttrVal($myName, "customInterval", 0);
   my $r = $dev->{READINGS};
-  
+
   for (my $i = 0; $i < $max; $i++) {
     my $s = $dev->{CHANGED}[$i];
 
@@ -114,14 +114,14 @@ average_Notify($$)
       my $secNow =  60 * $dNow[4] + $dNow[5];
       $secNow +=  3600 * $dNow[3] if($idx >= 1);
       $secNow += 86400 * $dNow[2] if($idx >= 2);
- 
+
       my $cumName = "${evName}_cum_" . $range[$idx];
       my $avgName = "${evName}_avg_" . $range[$idx];
       my $minName = "${evName}_min_" . $range[$idx];
       my $maxName = "${evName}_max_" . $range[$idx];
       my $cntName = "${evName}_cnt_" . $range[$idx];
       my $intName = "${evName}_int_" . $range[$idx];
-     
+
       if(defined($r->{(!$hideRaw ? "." : "") . $cumName})) {
         delete $r->{(!$hideRaw ? "." : "") . $cumName};
       }
@@ -131,11 +131,11 @@ average_Notify($$)
       if(defined($r->{(!$hideRaw ? "." : "") . $intName})) {
         delete $r->{(!$hideRaw ? "." : "") . $intName};
       }
-     
+
       $cumName = ($hideRaw ? "." : "") . $cumName;
       $cntName = ($hideRaw ? "." : "") . $cntName;
       $intName = ($hideRaw ? "." : "") . $intName;
-     
+
       if(((0 == $idx) && (!$doHour)) ||        # deactivate calculation if needed
          ((1 == $idx) && (!$doDay)) ||
          ((2 == $idx) && (!$doMonth)) ||
@@ -155,7 +155,7 @@ average_Notify($$)
       elsif((0 == $custInt) && defined($r->{$intName})) {
         delete $r->{$intName};                                  # reset when switching custom interval off
       }
-      
+
       if($doCounter && !defined($r->{$cntName})) {
         avg_setValTime($r, $cntName, 1, $tn);
         delete $r->{$cumName} if(defined($r->{$cumName}));      # reset when switching to counter-mode
@@ -164,7 +164,7 @@ average_Notify($$)
       elsif(!$doCounter && defined($r->{$cntName})) {
         delete $r->{$cntName};                                  # reset when switching to integral-mode
       }
-  
+
       if($doMMx && (!defined($r->{$maxName}) || !defined($r->{$minName}))) {
         avg_setValTime($r, $maxName, $val, $tn);
         avg_setValTime($r, $minName, $val, $tn);
@@ -183,19 +183,19 @@ average_Notify($$)
       elsif (!$doAvg && defined($r->{$avgName})) {
         delete $r->{$avgName};                                  # reset when switching avg off
       }
-  
+
       my @dLast = split("[ :-]", $r->{$cumName}{TIME});
       my @dInt;
       my $secInt;
       my $secLast =  60 * $dLast[4] + $dLast[5];
       $secLast +=  3600 * $dLast[3] if($idx >= 1);
       $secLast += 86400 * $dLast[2] if($idx >= 2);
-      
+
       if (($idx == 3) && ($custInt > 0)) {
         @dInt  = split("[ :-]", $r->{$intName}{TIME});
         $secInt = (86400 * $dInt[2]) + (3600 * $dInt[3]) + (60 * $dInt[4]) + $dInt[5];
       }
- 
+
       if((($idx == 0) && ($dLast[3] == $dNow[3])) ||
          (($idx == 1) && ($dLast[2] == $dNow[2])) ||
          (($idx == 2) && ($dLast[1] == $dNow[1])) ||
@@ -226,7 +226,7 @@ average_Notify($$)
                 if($r->{$minName}{VAL} > $val);
         }
 
-      } 
+      }
       elsif (($idx != 3) || (($idx == 3) && ($custInt > 0))) {  # hour, day or month changed or custom interval reached: create events and reset values
 
         if($doAvg) {
@@ -249,7 +249,7 @@ average_Notify($$)
           avg_setValTime($r, $maxName, sprintf($ffmt, $val), $tn);
           avg_setValTime($r, $minName, sprintf($ffmt, $val), $tn);
         }
-        
+
         if (($idx == 3) && ($custInt > 0)) {
           avg_setValTime($r, $intName, (0 == $r->{$intName}{VAL} ? 1 : 0), $tn);     # reset time of custom interval
         }
@@ -267,16 +267,16 @@ average_Notify($$)
 =item summary    add avarage Readings to arbitrary devices
 =item summary_DE berechnet Durchschnittswerte (als Readings)
 =begin html
- 
+
 <a name="average"></a>
 <h3>average</h3>
 <ul>
- 
+
   Compute additional average, minimum and maximum values for current hour, day and
   month.
- 
+
   <br>
- 
+
   <a name="averagedefine"></a>
   <b>Define</b>
   <ul>
@@ -286,8 +286,8 @@ average_Notify($$)
       The syntax for &lt;regexp&gt; is the same as the
       regexp for <a href="#notify">notify</a>.<br>
       If it matches, and the event is of the form "eventname number", then this
-      module computes the hourly, daily, monthly and custom interval average, maximum 
-      and minimum values and sums depending on attribute settings and generates events 
+      module computes the hourly, daily, monthly and custom interval average, maximum
+      and minimum values and sums depending on attribute settings and generates events
       of the form
       <ul>
         &lt;device&gt; &lt;eventname&gt;_avg_hour: &lt;computed_average&gt;
@@ -355,28 +355,28 @@ average_Notify($$)
       <ul>
         &lt;device&gt; &lt;eventname&gt;_int_custom: &lt;custom intervall timer&gt;
       </ul>
- 
-      at the beginning of the next hour, day, month or custom interval respectively depending on 
+
+      at the beginning of the next hour, day, month or custom interval respectively depending on
       attributes defined.<br>
       The current average, minimum, maximum, cumulated values and the counter are stored
       in the device readings depending on attributes defined.
     </ul>
     <br>
- 
+
     Example:<PRE>
     # Compute the average, minimum and maximum for the temperature events of
     # the ws1 device
     define avg_temp_ws1 average ws1:temperature.*
- 
+
     # Compute the average, minimum and maximum for each temperature event
     define avg_temp_ws1 average .*:temperature.*
- 
+
     # Compute the average, minimum and maximum for all temperature and humidity events
     # Events:
     # ws1 temperature: 22.3
     # ws1 humidity: 67.4
     define avg_temp_ws1 average .*:(temperature|humidity).*
- 
+
     # Compute the same from a combined event. Note: we need two average
     # definitions here, each of them defining the name with the first
     # paranthesis, and the value with the second.
@@ -386,13 +386,13 @@ average_Notify($$)
     define avg_temp_ws1_h average ws1:.*(H):.([-\d\.]+).*
     </PRE>
   </ul>
- 
+
   <a name="averageset"></a>
   <b>Set</b> <ul>N/A</ul><br>
- 
+
   <a name="averageget"></a>
   <b>Get</b> <ul>N/A</ul><br>
- 
+
   <a name="averageattr"></a>
   <b>Attributes</b>
   <ul>
@@ -405,11 +405,11 @@ average_Notify($$)
       temperature, counter is meant for adding up values, e.g. from a
       feeding unit. In the first case, the time between the events plays an
       important role, in the second case not. Default is integral.
-    <li>customInterval</li>  
-      defines a custom interval in seconds (0 = disabled). Value must be 
+    <li>customInterval</li>
+      defines a custom interval in seconds (0 = disabled). Value must be
       smaller than a month!
     <li>nominmax</li>
-      don't compute min and max values. Default is 0 (compute min & max).
+      don't compute min and max values. Default is 0 (compute min &amp; max).
     <li>noaverage</li>
       don't compute average values. Default is 0 (compute avarage).
     <li>nohour</li>
@@ -421,7 +421,7 @@ average_Notify($$)
     <li>hideraw</li>
       hide raw values. Default is 1 (hide raw values).
   </ul>
- 
+
   <a name="averageevents"></a>
   <b>Generated events:</b>
   <ul>
