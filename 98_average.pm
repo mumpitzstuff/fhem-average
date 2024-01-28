@@ -203,6 +203,7 @@ average_Notify($$)
                                                                 # custom interval not reached
         my $cVal = $r->{$cumName}{VAL};
         $cVal += ($doCounter ? $val : ($secNow - $secLast) * $val);
+        avg_setValTime($r, $cumName, $cVal, $tn);
         #if ($doCounter) {
         #    avg_setValTime($r, $cumName, $cVal + $val, $tn);
         #}
