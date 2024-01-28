@@ -202,13 +202,13 @@ average_Notify($$)
          (($idx == 3) && (($secNow - $secInt) <= $custInt))) {  # same hour, day or month or
                                                                 # custom interval not reached
         my $cVal = $r->{$cumName}{VAL};
-        #$cVal += ($doCounter ? $val : ($secNow - $secLast) * $val);
-        if ($doCounter) {
-            avg_setValTime($r, $cumName, $cVal + $val, $tn);
-        }
-        else {
-            avg_setValTime($r, $cumName, ($cVal + ($secNow * $val)) / 2, $tn);
-        }
+        $cVal += ($doCounter ? $val : ($secNow - $secLast) * $val);
+        #if ($doCounter) {
+        #    avg_setValTime($r, $cumName, $cVal + $val, $tn);
+        #}
+        #else {
+        #    avg_setValTime($r, $cumName, ($cVal + ($secNow * $val)) / 2, $tn);
+        #}
 
         if($doAvg) {
           if($doCounter) {
