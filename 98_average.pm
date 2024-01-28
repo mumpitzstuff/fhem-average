@@ -268,7 +268,7 @@ average_Notify($$)
 =item summary_DE berechnet Durchschnittswerte (als Readings)
 =begin html
 
-<a name="average"></a>
+<a id="average"></a>
 <h3>average</h3>
 <ul>
 
@@ -277,7 +277,7 @@ average_Notify($$)
 
   <br>
 
-  <a name="averagedefine"></a>
+  <a id="average-define"></a>
   <b>Define</b>
   <ul>
     <code>define &lt;name&gt; average &lt;regexp&gt;</code><br>
@@ -387,42 +387,44 @@ average_Notify($$)
     </PRE>
   </ul>
 
-  <a name="averageset"></a>
+  <a id="average-set"></a>
   <b>Set</b> <ul>N/A</ul><br>
 
-  <a name="averageget"></a>
+  <a id="average-get"></a>
   <b>Get</b> <ul>N/A</ul><br>
 
-  <a name="averageattr"></a>
+  <a id="average-attr"></a>
   <b>Attributes</b>
   <ul>
     <li><a href="#disable">disable</a></li>
     <li><a href="#disabledForIntervals">disabledForIntervals</a></li>
-    <li>computeMethod</li>
+
+    <a id="average-attr-computeMethod"></a>
+    <li>computeMethod [integral|counter]<br>
       defines how values are added up for the average calculation. This
       attribute can be set to integral or counter.
       The integral mode is meant for measuring continuous values like
       temperature, counter is meant for adding up values, e.g. from a
       feeding unit. In the first case, the time between the events plays an
-      important role, in the second case not. Default is integral.
-    <li>customInterval</li>
+      important role, in the second case not. Default is integral.</li><br>
+    <li>customInterval<br>
       defines a custom interval in seconds (0 = disabled). Value must be
-      smaller than a month!
-    <li>nominmax</li>
-      don't compute min and max values. Default is 0 (compute min &amp; max).
-    <li>noaverage</li>
-      don't compute average values. Default is 0 (compute avarage).
-    <li>nohour</li>
-      don't compute hourly values. Default is 0 (compute hourly values).
-    <li>noday</li>
-      don't compute daily values. Default is 0 (compute daily values).
-    <li>nomonth</li>
-      don't compute monthly values. Default is 0 (compute monthly values).
-    <li>hideraw</li>
-      hide raw values. Default is 1 (hide raw values).
+      smaller than a month!</li><br>
+    <li>nominmax [0|1]<br>
+      don't compute min and max values. Default is 0 (compute min &amp; max).</li><br>
+    <li>noaverage [0|1]<br>
+      don't compute average values. Default is 0 (compute avarage).</li><br>
+    <li>nohour [0|1]<br>
+      don't compute hourly values. Default is 0 (compute hourly values).</li><br>
+    <li>noday [0|1]<br>
+      don't compute daily values. Default is 0 (compute daily values).</li><br>
+    <li>nomonth [0|1]<br>
+      don't compute monthly values. Default is 0 (compute monthly values).</li><br>
+    <li>hideraw [0|1]<br>
+      hide raw values. Default is 1 (hide raw values).</li><br>
   </ul>
 
-  <a name="averageevents"></a>
+  <a id="average-events"></a>
   <b>Generated events:</b>
   <ul>
     <li>&lt;eventname&gt;_avg_hour: $avg_hour (only if nohour is set to 0)</li>
